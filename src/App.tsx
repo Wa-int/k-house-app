@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useRef, type ComponentProps } from 'react';
+import React, { useState, useEffect, useRef, type FormEvent } from 'react';
 import { 
   Menu, X, MapPin, Phone, Wifi, Shield, Car, Coffee, Home, Star, 
   ChevronRight, ChevronDown, Mail, Facebook, Globe, Tv, Refrigerator, CreditCard, 
   MessageCircle, Send, Sparkles, XCircle, Tag, Gift
 } from 'lucide-react';
 
+// Import Logo from local assets
+// import kLogo from './assets/k-logo.png';
+const kLogo = "https://placehold.co/100x100/059669/ffffff?text=K+Logo";
 
-import kLogo from './assets/k-logo.png';
-
-
-
+// --- Gemini API Configuration ---
 const apiKey: string = ""; // API Key provided by environment
 
+// --- Types & Interfaces ---
 type LanguageCode = 'th' | 'en' | 'jp' | 'cn' | 'ar';
 
 interface TranslationData {
@@ -198,7 +199,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       address_title: "ที่อยู่",
       address_val: "54 ซอยปรีดีพนมยงค์ 14 แยก 4 ถ.สุขุมวิท 71 แขวงพระโขนงเหนือ เขตวัฒนา กรุงเทพฯ 10110",
       phone_title: "โทรศัพท์",
-      phone_display: "088-524-5959",
+      phone_display: "088-524-5959", // Thai format
       phone_action: "กดเพื่อโทรออก",
       email_title: "อีเมล",
       email_val: "contact@k-house71.com",
@@ -525,7 +526,7 @@ const translations: Record<LanguageCode, TranslationData> = {
     hero: {
       location_badge: "سوخومفيت 71 • بريدي بانوميونغ 14",
       title: "شقق فاخرة بنمط كوندومينيوم",
-      subtitle: "استمتع بحياة المدينة المثالية. هدوء، خصوصية، ومساحات خضراء. بالقرب من محطة بي تي إس فرا خانونغ مع مرافق متكاملة.",
+      subtitle: "استمتع بحياة المدينة المثالية. هدوء، خصوصية. بالقرب من محطة بي تي إس فرا خانونغ.",
       cta_rooms: "عرض الغرف",
       cta_contact: "اتصل بنا"
     },
@@ -560,7 +561,7 @@ const translations: Record<LanguageCode, TranslationData> = {
     rooms: {
       title: "أنواع الغرف والأسعار",
       subtitle: "HOT PROMOTION! خصم خاص للعقود.",
-      note: "*** الأسعار قابلة للتغيير.",
+      disclaimer: "*** الأسعار قابلة للتغيير.",
       unit: "بات/شهر",
       price_start: "يبدأ العرض من",
       unit_label: "الوحدة: بات (Baht)",
@@ -659,6 +660,9 @@ const ratesData: RateRow[] = [
 const facilityIcons = [Wifi, Shield, Car, Star, Coffee, Home];
 
 // --- Sub-Components ---
+interface SectionProps {
+  t: TranslationData;
+}
 
 interface NavbarProps {
   lang: LanguageCode;
@@ -703,7 +707,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           
           {/* Logo Image */}
-          <div className="relative flex items-center justify-center shrink-0" style={{ width: '60px', height: '60px' }}>
+          <div className="relative flex items-center justify-center flex-shrink-0" style={{ width: '60px', height: '60px' }}>
              <img 
                 src={kLogo} 
                 alt="K-House Logo" 
@@ -809,7 +813,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
   );
 };
 
-const Hero: React.FC<ComponentProps> = ({ t }) => (
+const Hero: React.FC<SectionProps> = ({ t }) => (
   <header id="home" className="relative h-[600px] flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 z-0">
       <img 
@@ -846,7 +850,7 @@ const Hero: React.FC<ComponentProps> = ({ t }) => (
   </header>
 );
 
-const About: React.FC<ComponentProps> = ({ t }) => (
+const About: React.FC<SectionProps> = ({ t }) => (
   <section id="about" className="py-20 bg-white overflow-hidden">
     <div className="container mx-auto px-4">
       <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -892,7 +896,7 @@ const About: React.FC<ComponentProps> = ({ t }) => (
   </section>
 );
 
-const Facilities: React.FC<ComponentProps> = ({ t }) => (
+const Facilities: React.FC<SectionProps> = ({ t }) => (
   <section id="facilities" className="py-20 bg-slate-50 relative overflow-hidden">
     {/* Background Pattern อ่อนๆ */}
     <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
@@ -920,7 +924,7 @@ const Facilities: React.FC<ComponentProps> = ({ t }) => (
   </section>
 );
 
-const Rooms: React.FC<ComponentProps> = ({ t }) => (
+const Rooms: React.FC<SectionProps> = ({ t }) => (
   <section id="rooms" className="py-20 bg-white relative">
     <div className="container mx-auto px-4">
       {/* Header */}
@@ -932,7 +936,7 @@ const Rooms: React.FC<ComponentProps> = ({ t }) => (
       </div>
       
       {/* NEW: Promotion Banner */}
-      <div className="bg-linear-to-r from-red-600 to-orange-500 rounded-2xl p-1 shadow-lg mb-12 transform hover:scale-[1.01] transition-transform duration-300">
+      <div className="bg-gradient-to-r from-red-600 to-orange-500 rounded-2xl p-1 shadow-lg mb-12 transform hover:scale-[1.01] transition-transform duration-300">
         <div className="bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left relative overflow-hidden">
            {/* Decorative background icons */}
            <Tag className="absolute -bottom-4 -left-4 text-red-50 w-32 h-32 -rotate-12" />
@@ -1096,7 +1100,7 @@ const Rooms: React.FC<ComponentProps> = ({ t }) => (
   </section>
 );
 
-const Contact: React.FC<ComponentProps> = ({ t }) => (
+const Contact: React.FC<SectionProps> = ({ t }) => (
   <section id="contact" className="py-20 bg-slate-900 text-white relative overflow-hidden">
     {/* Decorative elements - Analogous vibe (Teal & Emerald) */}
     <div className="absolute top-0 right-0 w-96 h-96 bg-teal-600 rounded-full filter blur-[120px] opacity-20 animate-pulse"></div>
@@ -1189,7 +1193,7 @@ const Contact: React.FC<ComponentProps> = ({ t }) => (
   </section>
 );
 
-const Footer: React.FC<ComponentProps> = ({ t }) => (
+const Footer: React.FC<SectionProps> = ({ t }) => (
   <footer className="bg-emerald-950 py-8 border-t border-emerald-900">
     <div className="container mx-auto px-4 text-center text-slate-400 text-sm">
       <p>&copy; {new Date().getFullYear()} {t.footer.rights}</p>
@@ -1202,7 +1206,7 @@ interface ChatBotProps {
   lang: LanguageCode;
 }
 
-const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
+const ChatBot: React.FC<ChatBotProps> = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([
     { role: 'model', text: 'Hello! I am K-Bot, the AI assistant for K-House 71. How can I help you today? (I can speak Thai, English, Japanese, Chinese, and Arabic!)' }
