@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useRef, type FormEvent } from 'react';
+import React, { useState, useEffect, useRef, type ComponentProps } from 'react';
 import { 
   Menu, X, MapPin, Phone, Wifi, Shield, Car, Coffee, Home, Star, 
   ChevronRight, ChevronDown, Mail, Facebook, Globe, Tv, Refrigerator, CreditCard, 
-  MessageCircle, Send, Sparkles, XCircle
+  MessageCircle, Send, Sparkles, XCircle, Tag, Gift
 } from 'lucide-react';
+
 
 import kLogo from './assets/k-logo.png';
 
-// --- Gemini API Configuration ---
+
+
 const apiKey: string = ""; // API Key provided by environment
 
-// --- Types & Interfaces ---
 type LanguageCode = 'th' | 'en' | 'jp' | 'cn' | 'ar';
 
 interface TranslationData {
@@ -74,6 +75,12 @@ interface TranslationData {
     social_title: string;
     social_label: string;
     map_btn: string;
+  };
+  promotion: {
+    title: string;
+    detail: string;
+    cta: string;
+    limited: string;
   };
   footer: {
     rights: string;
@@ -199,6 +206,12 @@ const translations: Record<LanguageCode, TranslationData> = {
       social_label: "K-House Apartment",
       map_btn: "ดูแผนที่ Google Maps"
     },
+    promotion: {
+      title: "โปรโมชั่นพิเศษ! 🔥",
+      detail: "ส่วนลดพิเศษสำหรับสัญญาเช่า 6 เดือน และ 1 ปี",
+      cta: "ดูราคาและจองเลย",
+      limited: "ด่วน! ห้องมีจำนวนจำกัด"
+    },
     footer: {
       rights: "K-House Sukhumvit 71. สงวนลิขสิทธิ์."
     }
@@ -282,7 +295,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       title: "Contact Us",
       desc: "Interested in visiting or need more info? Contact us via channels below. Open 24/7.",
       address_title: "Address",
-      address_val: "54 Soi Pridi Banomyong 14, Sukhumvit 71 Rd, Phra Khanong Nuea, Watthana, Bangkok 10110",
+      address_val: "54 Soi Pridi Banomyong 14, Sukhumvit 71 Rd, Watthana, Bangkok 10110",
       phone_title: "Phone",
       phone_display: "+66 88-524-5959", // International format
       phone_action: "Tap to call",
@@ -291,6 +304,12 @@ const translations: Record<LanguageCode, TranslationData> = {
       social_title: "Facebook",
       social_label: "K-House Apartment",
       map_btn: "View Google Maps"
+    },
+    promotion: {
+      title: "Special Promotion! 🔥",
+      detail: "Special discount for 6-month & 1-year contracts.",
+      cta: "See Rates & Book",
+      limited: "Hurry! Limited Availability"
     },
     footer: {
       rights: "K-House Sukhumvit 71. All rights reserved."
@@ -385,6 +404,12 @@ const translations: Record<LanguageCode, TranslationData> = {
       social_label: "K-House Apartment",
       map_btn: "Googleマップを見る"
     },
+    promotion: {
+      title: "特別プロモーション！ 🔥",
+      detail: "6ヶ月および1年契約の特別割引。",
+      cta: "料金を見る",
+      limited: "お早めに！空室わずか"
+    },
     footer: {
       rights: "K-House Sukhumvit 71. All rights reserved."
     }
@@ -478,6 +503,12 @@ const translations: Record<LanguageCode, TranslationData> = {
       social_label: "K-House Apartment",
       map_btn: "查看谷歌地图"
     },
+    promotion: {
+      title: "特别促销！ 🔥",
+      detail: "6个月和1年合约的特别折扣。",
+      cta: "查看价格",
+      limited: "数量有限，欲订从速！"
+    },
     footer: {
       rights: "K-House Sukhumvit 71. 保留所有权利。"
     }
@@ -570,6 +601,12 @@ const translations: Record<LanguageCode, TranslationData> = {
       social_title: "فيسبوك",
       social_label: "K-House Apartment",
       map_btn: "عرض خرائط جوجل"
+    },
+    promotion: {
+      title: "عرض خاص! 🔥",
+      detail: "خصم خاص لعقود 6 أشهر وسنة واحدة.",
+      cta: "عرض الأسعار",
+      limited: "بسرعة! الأماكن محدودة"
     },
     footer: {
       rights: "كي-هاوس سوخومفيت 71. جميع الحقوق محفوظة."
@@ -665,7 +702,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
         {/* Logo Section - Modified Layout: Logo Left, Text Right */}
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           
-          {/* Logo Image - User provided PNG */}
+          {/* Logo Image */}
           <div className="relative flex items-center justify-center shrink-0" style={{ width: '60px', height: '60px' }}>
              <img 
                 src={kLogo} 
@@ -771,10 +808,6 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
     </nav>
   );
 };
-
-interface ComponentProps {
-  t: TranslationData;
-}
 
 const Hero: React.FC<ComponentProps> = ({ t }) => (
   <header id="home" className="relative h-[600px] flex items-center justify-center overflow-hidden">
@@ -895,6 +928,34 @@ const Rooms: React.FC<ComponentProps> = ({ t }) => (
         <div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-3">{t.rooms.title}</h2>
           <p className="text-amber-600 font-bold bg-amber-100/50 inline-block px-4 py-1.5 rounded-full shadow-sm">{t.rooms.subtitle}</p>
+        </div>
+      </div>
+      
+      {/* NEW: Promotion Banner */}
+      <div className="bg-linear-to-r from-red-600 to-orange-500 rounded-2xl p-1 shadow-lg mb-12 transform hover:scale-[1.01] transition-transform duration-300">
+        <div className="bg-white rounded-xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left relative overflow-hidden">
+           {/* Decorative background icons */}
+           <Tag className="absolute -bottom-4 -left-4 text-red-50 w-32 h-32 -rotate-12" />
+           
+           <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-1.5 rounded-full text-xs font-bold mb-3">
+                 <Sparkles size={14} /> {t.promotion.limited || "LIMITED TIME OFFER"}
+              </div>
+              <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">
+                 {t.promotion.title}
+              </h3>
+              <p className="text-slate-600 max-w-xl text-lg">
+                 {t.promotion.detail}
+              </p>
+           </div>
+           
+           <div className="relative z-10 shrink-0">
+              <div className="text-center bg-slate-50 p-4 rounded-xl border border-slate-200">
+                 <p className="text-sm text-slate-500 font-medium mb-1">Starting from</p>
+                 <p className="text-4xl font-black text-red-600 tracking-tight">5,900<span className="text-lg text-slate-400 font-normal">/mo</span></p>
+                 <p className="text-xs text-emerald-600 font-bold mt-1">1 Year Contract</p>
+              </div>
+           </div>
         </div>
       </div>
 
@@ -1220,7 +1281,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
       {/* Floating Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-linear-to-r from-emerald-500 to-teal-600 text-white rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
       >
         {isOpen ? <XCircle size={28} /> : <div className="relative"><MessageCircle size={28} /><Sparkles size={12} className="absolute -top-1 -right-1 text-yellow-300 animate-pulse" /></div>}
       </button>
@@ -1229,7 +1290,7 @@ const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col h-[500px] animate-in slide-in-from-bottom-10 fade-in duration-300">
           {/* Header */}
-          <div className="bg-linear-to-r from-emerald-600 to-teal-700 p-4 flex items-center gap-3">
+          <div className="bg-gradient-to-r from-emerald-600 to-teal-700 p-4 flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white">
               <Sparkles size={20} />
             </div>
@@ -1287,11 +1348,60 @@ const ChatBot: React.FC<ChatBotProps> = ({ lang }) => {
   );
 };
 
+// --- Promotion Toast Component (Revamped for Eye-catching) ---
+const PromotionToast = ({ t, isOpen, onClose }: { t: TranslationData, isOpen: boolean, onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed bottom-6 left-6 z-50 max-w-sm w-full animate-in slide-in-from-bottom-20 fade-in duration-700">
+       <div className="relative bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl shadow-2xl p-1 overflow-hidden">
+          {/* Animated background effect */}
+          <div className="absolute top-0 left-0 w-full h-full bg-white/10 animate-pulse"></div>
+          
+          <div className="relative bg-white rounded-xl p-4 flex items-start gap-4">
+             <button 
+               onClick={onClose}
+               className="absolute top-2 right-2 text-slate-400 hover:text-slate-600 transition-colors"
+             >
+               <X size={16} />
+             </button>
+
+             <div className="bg-red-100 p-3 rounded-full shrink-0">
+                <Gift size={24} className="text-red-600 animate-bounce" />
+             </div>
+             
+             <div className="pt-1">
+                <h3 className="font-bold text-slate-900 text-base">{t.promotion.title}</h3>
+                <p className="text-sm text-slate-600 mt-1 leading-snug">{t.promotion.detail}</p>
+                <a 
+                  href="#rooms" 
+                  onClick={onClose}
+                  className="inline-block mt-3 text-sm font-bold text-red-600 hover:text-red-700 hover:underline decoration-2 underline-offset-2"
+                >
+                  {t.promotion.cta} →
+                </a>
+             </div>
+          </div>
+       </div>
+    </div>
+  );
+};
+
 // --- Main App Component ---
 export default function App() {
   const [lang, setLang] = useState<LanguageCode>('en');
+  const [showPromo, setShowPromo] = useState(false);
+  
   // Fallback language to English
   const t = translations[lang] || translations['en'];
+
+  useEffect(() => {
+    // Show promo popup after 1.5 seconds
+    const timer = setTimeout(() => {
+      setShowPromo(true);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="font-sans text-slate-800 bg-slate-50 min-h-screen" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
@@ -1303,6 +1413,7 @@ export default function App() {
       <Contact t={t} />
       <Footer t={t} />
       <ChatBot lang={lang} />
+      <PromotionToast t={t} isOpen={showPromo} onClose={() => setShowPromo(false)} />
     </div>
   );
 }
