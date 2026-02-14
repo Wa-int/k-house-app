@@ -5,14 +5,11 @@ import {
   MessageCircle, Send, Sparkles, XCircle, Tag, Gift
 } from 'lucide-react';
 
-// Import Logo from local assets
-// import kLogo from './assets/k-logo.png';
-const kLogo = "https://placehold.co/100x100/059669/ffffff?text=K+Logo";
+import kLogo from './assets/k-logo.png';
 
 // --- Gemini API Configuration ---
 const apiKey: string = ""; // API Key provided by environment
 
-// --- Types & Interfaces ---
 type LanguageCode = 'th' | 'en' | 'jp' | 'cn' | 'ar';
 
 interface TranslationData {
@@ -83,6 +80,11 @@ interface TranslationData {
     cta: string;
     limited: string;
   };
+  promotion_banner: {
+    starting_from: string;
+    unit_mo: string;
+    contract_1yr: string;
+  };
   footer: {
     rights: string;
   };
@@ -116,7 +118,6 @@ interface Message {
   text: string;
 }
 
-// --- Data & Translations ---
 const translations: Record<LanguageCode, TranslationData> = {
   th: {
     label: "ไทย",
@@ -212,6 +213,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       detail: "ส่วนลดพิเศษสำหรับสัญญาเช่า 6 เดือน และ 1 ปี",
       cta: "ดูราคาและจองเลย",
       limited: "ด่วน! ห้องมีจำนวนจำกัด"
+    },
+    promotion_banner: {
+      starting_from: "เริ่มต้นเพียง",
+      unit_mo: "/เดือน",
+      contract_1yr: "สัญญา 1 ปี"
     },
     footer: {
       rights: "K-House Sukhumvit 71. สงวนลิขสิทธิ์."
@@ -312,6 +318,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       cta: "See Rates & Book",
       limited: "Hurry! Limited Availability"
     },
+    promotion_banner: {
+      starting_from: "Starting from",
+      unit_mo: "/mo",
+      contract_1yr: "1 Year Contract"
+    },
     footer: {
       rights: "K-House Sukhumvit 71. All rights reserved."
     }
@@ -410,6 +421,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       detail: "6ヶ月および1年契約の特別割引。",
       cta: "料金を見る",
       limited: "お早めに！空室わずか"
+    },
+    promotion_banner: {
+      starting_from: "最低価格",
+      unit_mo: "/月",
+      contract_1yr: "1年契約"
     },
     footer: {
       rights: "K-House Sukhumvit 71. All rights reserved."
@@ -510,6 +526,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       cta: "查看价格",
       limited: "数量有限，欲订从速！"
     },
+    promotion_banner: {
+      starting_from: "最低起价",
+      unit_mo: "/月",
+      contract_1yr: "1年合约"
+    },
     footer: {
       rights: "K-House Sukhumvit 71. 保留所有权利。"
     }
@@ -608,6 +629,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       detail: "خصم خاص لعقود 6 أشهر وسنة واحدة.",
       cta: "عرض الأسعار",
       limited: "بسرعة! الأماكن محدودة"
+    },
+    promotion_banner: {
+      starting_from: "تبدأ من",
+      unit_mo: "/شهر",
+      contract_1yr: "عقد لمدة سنة"
     },
     footer: {
       rights: "كي-هاوس سوخومفيت 71. جميع الحقوق محفوظة."
@@ -955,9 +981,9 @@ const Rooms: React.FC<SectionProps> = ({ t }) => (
            
            <div className="relative z-10 shrink-0">
               <div className="text-center bg-slate-50 p-4 rounded-xl border border-slate-200">
-                 <p className="text-sm text-slate-500 font-medium mb-1">Starting from</p>
-                 <p className="text-4xl font-black text-red-600 tracking-tight">5,900<span className="text-lg text-slate-400 font-normal">/mo</span></p>
-                 <p className="text-xs text-emerald-600 font-bold mt-1">1 Year Contract</p>
+                 <p className="text-sm text-slate-500 font-medium mb-1">{t.promotion_banner.starting_from}</p>
+                 <p className="text-4xl font-black text-red-600 tracking-tight">5,900<span className="text-lg text-slate-400 font-normal">{t.promotion_banner.unit_mo}</span></p>
+                 <p className="text-xs text-emerald-600 font-bold mt-1">{t.promotion_banner.contract_1yr}</p>
               </div>
            </div>
         </div>
