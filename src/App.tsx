@@ -1311,7 +1311,7 @@ const ChatBot: React.FC<ChatBotProps> = () => {
       {/* Floating Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 p-4 bg-linear-to-r from-emerald-500 to-teal-600 text-white rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 flex items-center justify-center"
       >
         {isOpen ? <XCircle size={28} /> : <div className="relative"><MessageCircle size={28} /><Sparkles size={12} className="absolute -top-1 -right-1 text-yellow-300 animate-pulse" /></div>}
       </button>
@@ -1320,7 +1320,7 @@ const ChatBot: React.FC<ChatBotProps> = () => {
       {isOpen && (
         <div className="fixed bottom-24 right-6 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col h-[500px] animate-in slide-in-from-bottom-10 fade-in duration-300">
           {/* Header */}
-          <div className="bg-gradient-to-r from-emerald-600 to-teal-700 p-4 flex items-center gap-3">
+          <div className="bg-linear-to-r from-emerald-600 to-teal-700 p-4 flex items-center gap-3">
             <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white">
               <Sparkles size={20} />
             </div>
@@ -1442,7 +1442,7 @@ export default function App() {
       <Rooms t={t} />
       <Contact t={t} />
       <Footer t={t} />
-      <ChatBot lang={lang} />
+      {/* <ChatBot lang={lang} /> */}
       <PromotionToast t={t} isOpen={showPromo} onClose={() => setShowPromo(false)} />
     </div>
   );
