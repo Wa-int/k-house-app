@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import {
   Menu,
@@ -1074,7 +1073,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t }) => {
 const Hero: React.FC<SectionProps> = ({ t }) => (
   <header
     id="home"
-    className="relative h-[700px] flex items-center justify-center overflow-hidden"
+    className="relative h-175 flex items-center justify-center overflow-hidden"
   >
     <div className="absolute inset-0 z-0">
       <img
@@ -1084,7 +1083,7 @@ const Hero: React.FC<SectionProps> = ({ t }) => (
       />
       {/* Dark overlay for classic luxury feel */}
       <div className="absolute inset-0 bg-black/40"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/30"></div>
     </div>
 
     <div className="container mx-auto px-4 relative z-10 text-center">
@@ -1128,7 +1127,7 @@ const About: React.FC<SectionProps> = ({ t }) => (
           <img
             src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
             alt="Interior"
-            className="relative z-10 shadow-2xl object-cover h-[500px] w-full grayscale-[10%] hover:grayscale-0 transition-all duration-700 rounded-2xl"
+            className="relative z-10 shadow-2xl object-cover h-125 w-full grayscale-10 hover:grayscale-0 transition-all duration-700 rounded-2xl"
           />
 
           <div className="absolute -bottom-10 -left-10 bg-white p-8 shadow-xl z-20 hidden md:block max-w-xs border border-stone-100 rounded-2xl">
@@ -1279,7 +1278,7 @@ const RoomMatcherModal: React.FC<RoomMatcherProps> = ({
         <p className="text-stone-600 mb-4 text-sm">{t.room_matcher.subtitle}</p>
 
         <textarea
-          className="w-full border border-stone-300 rounded-xl p-3 text-sm focus:border-amber-600 focus:outline-none min-h-[100px]"
+          className="w-full border border-stone-300 rounded-xl p-3 text-sm focus:border-amber-600 focus:outline-none min-h-25"
           placeholder={t.room_matcher.placeholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -1341,7 +1340,7 @@ const ImageGalleryModal: React.FC<GalleryProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center animate-in fade-in duration-300"
+      className="fixed inset-0 z-60 bg-black/95 flex items-center justify-center animate-in fade-in duration-300"
       onClick={onClose}
     >
       <button
@@ -1508,7 +1507,7 @@ const Rooms: React.FC<SectionProps> = ({ t }) => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>
-                <div className="p-8 flex flex-col flex-grow text-center">
+                <div className="p-8 flex flex-col grow text-center">
                   <h3 className="text-lg font-bold text-stone-900 mb-2 uppercase tracking-wide group-hover:text-amber-700 transition-colors">
                     {textData.title}
                   </h3>
