@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  Menu, X, MapPin, Phone, Wifi, Shield, Car, ChevronRight, ChevronDown, ChevronLeft, 
-  Mail, Facebook, Globe, Tv, Refrigerator, Tag,
-  CalendarCheck, CheckCircle, Dumbbell, ArrowUpCircle, Star, Loader2
+  Menu, X, MapPin, Phone, Wifi, Shield, Car, Star, 
+  ChevronRight, ChevronDown, ChevronLeft, Mail, Facebook, Globe, Tv, Refrigerator, Tag, Loader2, CalendarCheck, CheckCircle, Dumbbell, ArrowUpCircle
 } from 'lucide-react';
 
 // Import Logo from local assets
 import kLogo from './assets/k-logo.png';
 
-// --- Types & Interfaces ---
 type LanguageCode = 'th' | 'en' | 'jp' | 'cn' | 'ar';
 
 interface TranslationData {
@@ -56,6 +54,7 @@ interface TranslationData {
     fridge: string;
     cc: string;
     view_photos: string;
+    ai_help_btn: string;
     types: {
       title: string;
       features: string[];
@@ -85,6 +84,13 @@ interface TranslationData {
     starting_from: string;
     unit_mo: string;
     contract_1yr: string;
+  };
+  room_matcher: {
+    title: string;
+    subtitle: string;
+    placeholder: string;
+    analyze_btn: string;
+    result_title: string;
   };
   reservation: {
     title: string;
@@ -192,6 +198,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       fridge: "ตู้เย็น (Refrigerator) 500 บาท/เดือน",
       cc: "ยินดีรับบัตรเครดิต (We accept major Credit Cards)",
       view_photos: "ดูรูปภาพเพิ่มเติม",
+      ai_help_btn: "ให้ AI ช่วยเลือกห้อง",
       types: [
         {
           title: "Studio A (Big Balcony)",
@@ -235,6 +242,13 @@ const translations: Record<LanguageCode, TranslationData> = {
       starting_from: "เริ่มต้นเพียง",
       unit_mo: "/เดือน",
       contract_1yr: "สัญญา 1 ปี"
+    },
+    room_matcher: {
+      title: "AI Room Matcher ✨",
+      subtitle: "ไม่แน่ใจว่าจะเลือกห้องไหน? บอกความต้องการของคุณ แล้วให้ AI แนะนำให้สิครับ!",
+      placeholder: "เช่น: อยากได้ห้องเงียบๆ งบประมาณ 7,000 บาท อยู่ประมาณ 6 เดือน...",
+      analyze_btn: "วิเคราะห์หาห้องที่ใช่",
+      result_title: "ห้องที่แนะนำสำหรับคุณ:"
     },
     reservation: {
       title: "แบบฟอร์มจองห้องพัก",
@@ -312,6 +326,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       fridge: "Refrigerator 500 Baht / month",
       cc: "We accept major Credit Cards",
       view_photos: "View Photos",
+      ai_help_btn: "Help Me Choose (AI)",
       types: [
         {
           title: "Studio A (Big Balcony)",
@@ -337,7 +352,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       address_title: "Address",
       address_val: "54 Soi Pridi Banomyong 14, Sukhumvit 71 Rd, Watthana, Bangkok 10110",
       phone_title: "Phone",
-      phone_display: "+66 88-524-5959",
+      phone_display: "+66 88-524-5959", // International format
       phone_action: "Tap to call",
       email_title: "Email",
       email_val: "contact@k-house71.com",
@@ -355,6 +370,13 @@ const translations: Record<LanguageCode, TranslationData> = {
       starting_from: "Starting from",
       unit_mo: "/mo",
       contract_1yr: "1 Year Contract"
+    },
+    room_matcher: {
+      title: "AI Room Matcher ✨",
+      subtitle: "Unsure which room fits you best? Tell us your needs and let AI decide!",
+      placeholder: "e.g., I need a quiet room for 6 months, budget around 7,000 THB...",
+      analyze_btn: "Find My Room",
+      result_title: "AI Recommendation:"
     },
     reservation: {
       title: "Reservation Form",
@@ -432,6 +454,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       fridge: "冷蔵庫 500バーツ/月",
       cc: "主要なクレジットカードをご利用いただけます",
       view_photos: "写真を見る",
+      ai_help_btn: "AIで部屋を選ぶ",
       types: [
         {
           title: "スタジオ A (大きなバルコニー)",
@@ -457,7 +480,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       address_title: "住所",
       address_val: "54 Soi Pridi Banomyong 14, Sukhumvit 71 Rd, Phra Khanong Nuea, Watthana, Bangkok 10110",
       phone_title: "電話",
-      phone_display: "+66 88-524-5959",
+      phone_display: "+66 88-524-5959", // International format
       phone_action: "タップして発信",
       email_title: "メール",
       email_val: "contact@k-house71.com",
@@ -475,6 +498,13 @@ const translations: Record<LanguageCode, TranslationData> = {
       starting_from: "最低価格",
       unit_mo: "/月",
       contract_1yr: "1年契約"
+    },
+    room_matcher: {
+      title: "AIルームマッチャー ✨",
+      subtitle: "どの部屋がいいか迷っていますか？AIがあなたにぴったりの部屋を提案します！",
+      placeholder: "例：静かな部屋、予算7,000バーツ、6ヶ月滞在...",
+      analyze_btn: "部屋を探す",
+      result_title: "AIのおすすめ："
     },
     reservation: {
       title: "予約フォーム",
@@ -516,11 +546,11 @@ const translations: Record<LanguageCode, TranslationData> = {
       title: "市中心的完美居所",
       desc: "K-House Sukhumvit 71 是一家拥有60间客房的豪华服务式公寓，以现代精品风格装饰。提供高品质家具和完备的设施，距离 BTS Phra Khanong 仅3分钟。",
       points: [
-        "距离 BTS Phra Khanong 仅 3 分钟",
+        "靠近 BTS Phra Khanong (24小时摩托车出租服务)",
         "靠近 Chalong Rat 高速公路 (交通便利)",
-        "靠近 MaxValu 24小时超市、餐厅和著名街头美食",
-        "高科技安保系统，让您住得安心",
-        "设有健身房和安全的室内停车场"
+        "靠近曼谷预科国际学校 (Bangkok Prep) 和圣安德鲁斯国际学校",
+        "美食天堂！靠近 MaxValu, Lotus 和著名的街头美食区 (Pridi Banomyong 2)",
+        "多条通道可达 (素坤逸 71, Khlong Tan, Phetchaburi)"
       ],
       location_card: {
         label: "黄金地段",
@@ -542,7 +572,7 @@ const translations: Record<LanguageCode, TranslationData> = {
     rooms: {
       title: "房型及价格",
       subtitle: "HOT PROMOTION! 长短期合约均享特别折扣。",
-      disclaimer: "*** 价格可能会有所变动，恕不另行通知。（不含水电费）",
+      disclaimer: "*** 价格可能会有所变动，请联系工作人员。",
       price_start: "促销起价",
       unit: "泰铢/月",
       unit_label: "单位：泰铢 (Baht)",
@@ -552,6 +582,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       fridge: "冰箱 500泰铢/月",
       cc: "我们接受主流信用卡",
       view_photos: "查看照片",
+      ai_help_btn: "AI 帮我选房",
       types: [
         {
           title: "单间公寓 A (大阳台)",
@@ -595,6 +626,13 @@ const translations: Record<LanguageCode, TranslationData> = {
       starting_from: "最低起价",
       unit_mo: "/月",
       contract_1yr: "1年合约"
+    },
+    room_matcher: {
+      title: "AI 选房助手 ✨",
+      subtitle: "不确定选哪个房间？告诉我们您的需求，让 AI 为您推荐！",
+      placeholder: "例如：我需要一个安静的房间，预算 7,000 泰铢，住 6 个月...",
+      analyze_btn: "开始分析",
+      result_title: "AI 推荐："
     },
     reservation: {
       title: "预订表格",
@@ -673,6 +711,7 @@ const translations: Record<LanguageCode, TranslationData> = {
       fridge: "ثلاجة 500 بات",
       cc: "نقبل بطاقات الائتمان",
       view_photos: "عرض الصور",
+      ai_help_btn: "مساعد AI لاختيار الغرفة",
       types: [
         {
           title: "استوديو أ (شرفة كبيرة)",
@@ -716,6 +755,13 @@ const translations: Record<LanguageCode, TranslationData> = {
       starting_from: "تبدأ من",
       unit_mo: "/شهر",
       contract_1yr: "عقد لمدة سنة"
+    },
+    room_matcher: {
+      title: "مستشار الغرف الذكي ✨",
+      subtitle: "لست متأكداً أي غرفة تختار؟ أخبرنا باحتياجاتك وسيقوم الذكاء الاصطناعي باقتراح الأفضل!",
+      placeholder: "مثال: أحتاج غرفة هادئة لمدة 6 أشهر، ميزانية 7000 بات...",
+      analyze_btn: "تحليل واقتراح",
+      result_title: "توصية الذكاء الاصطناعي:"
     },
     reservation: {
       title: "نموذج الحجز",
@@ -826,8 +872,8 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t, onOpenBooking }) => {
   }, []);
 
   const languageOptions: { code: LanguageCode; label: string; fullLabel: string }[] = [
-    { code: 'th', label: 'TH', fullLabel: 'ไทย' },
     { code: 'en', label: 'EN', fullLabel: 'English' },
+    { code: 'th', label: 'TH', fullLabel: 'ไทย' },
     { code: 'cn', label: 'CN', fullLabel: '中文' },
     { code: 'jp', label: 'JP', fullLabel: '日本語' },
     { code: 'ar', label: 'AR', fullLabel: 'العربية' }
@@ -840,7 +886,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t, onOpenBooking }) => {
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           
           {/* Logo Image */}
-          <div className="relative flex items-center justify-center shrink-0" style={{ width: '60px', height: '60px' }}>
+          <div className="relative flex items-center justify-center flex-shrink-0" style={{ width: '60px', height: '60px' }}>
              <img 
                 src={kLogo} 
                 alt="K-House Logo" 
@@ -1016,7 +1062,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ t, isOpen, onClose 
   };
 
   return (
-    <div className="fixed inset-0 z-80 bg-black/80 flex items-center justify-center p-4 animate-in fade-in duration-300">
+    <div className="fixed inset-0 z-[80] bg-black/80 flex items-center justify-center p-4 animate-in fade-in duration-300">
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative">
         {isSuccess ? (
            <div className="p-10 text-center animate-in zoom-in-95">
@@ -1095,7 +1141,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ t, isOpen, onClose 
 };
 
 const Hero: React.FC<SectionProps> = ({ t }) => (
-  <header id="home" className="relative h-175 flex items-center justify-center overflow-hidden">
+  <header id="home" className="relative h-[700px] flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 z-0">
       <img 
         src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
@@ -1104,7 +1150,7 @@ const Hero: React.FC<SectionProps> = ({ t }) => (
       />
       {/* Dark overlay for classic luxury feel */}
       <div className="absolute inset-0 bg-black/40"></div>
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
     </div>
 
     <div className="container mx-auto px-4 relative z-10 text-center">
@@ -1142,7 +1188,7 @@ const About: React.FC<SectionProps> = ({ t }) => (
           <img 
             src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
             alt="Interior" 
-            className="relative z-10 shadow-2xl object-cover h-125 w-full grayscale-10 hover:grayscale-0 transition-all duration-700 rounded-2xl"
+            className="relative z-10 shadow-2xl object-cover h-[500px] w-full grayscale-[10%] hover:grayscale-0 transition-all duration-700 rounded-2xl"
           />
           
           <div className="absolute -bottom-10 -left-10 bg-white p-8 shadow-xl z-20 hidden md:block max-w-xs border border-stone-100 rounded-2xl">
@@ -1179,7 +1225,7 @@ const Facilities: React.FC<SectionProps> = ({ t }) => (
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
         {t.facilities.items.map((item: {name: string}, index: number) => {
-          const IconComponent = facilityIcons[index];
+          const IconComponent = facilityIcons[index] || Star;
           return (
             <div key={index} className="group p-6 border border-stone-200 hover:border-amber-700/50 transition-colors duration-300 rounded-3xl">
               <div className="w-12 h-12 mx-auto mb-4 text-stone-400 group-hover:text-amber-700 transition-colors duration-300">
@@ -1217,7 +1263,7 @@ const ImageGalleryModal: React.FC<GalleryProps> = ({ isOpen, onClose, images }) 
   };
 
   return (
-    <div className="fixed inset-0 z-60 bg-black/95 flex items-center justify-center animate-in fade-in duration-300" onClick={onClose}>
+    <div className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center animate-in fade-in duration-300" onClick={onClose}>
       <button 
         onClick={onClose}
         className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2"
@@ -1345,7 +1391,7 @@ const Rooms: React.FC<SectionProps> = ({ t }) => {
                 </div>
                 <img src={room.images[0]} alt={textData.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
-              <div className="p-8 flex flex-col grow text-center">
+              <div className="p-8 flex flex-col flex-grow text-center">
                 <h3 className="text-lg font-bold text-stone-900 mb-2 uppercase tracking-wide group-hover:text-amber-700 transition-colors">{textData.title}</h3>
                 <div className="flex justify-center gap-2 mb-6">
                    <div className="h-px w-8 bg-amber-700"></div>
@@ -1544,7 +1590,7 @@ const Contact: React.FC<SectionProps> = ({ t }) => (
           </div>
         </div>
 
-        <div className="h-150 bg-stone-800 relative group overflow-hidden rounded-3xl shadow-xl border border-stone-200">
+        <div className="h-[600px] bg-stone-800 relative group overflow-hidden rounded-3xl shadow-xl border border-stone-200">
           <iframe
             src="https://maps.google.com/maps?q=K-House%2071%20Sukhumvit%2071&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%"
@@ -1576,12 +1622,9 @@ const Contact: React.FC<SectionProps> = ({ t }) => (
 );
 
 const Footer: React.FC<SectionProps> = ({ t }) => (
-  <footer className="bg-black py-10 border-t border-stone-800">
-    <div className="container mx-auto px-4 text-center">
-      <div className="mb-6 flex justify-center items-center gap-2 opacity-50">
-        <span className="text-xl font-serif text-white tracking-widest">K-HOUSE 71</span>
-      </div>
-      <p className="text-stone-600 text-xs uppercase tracking-widest">&copy; {new Date().getFullYear()} {t.footer.rights}</p>
+  <footer className="bg-emerald-950 py-8 border-t border-emerald-900">
+    <div className="container mx-auto px-4 text-center text-slate-400 text-sm">
+      <p>&copy; {new Date().getFullYear()} {t.footer.rights}</p>
     </div>
   </footer>
 );
