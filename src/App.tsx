@@ -841,7 +841,7 @@ const Navbar: React.FC<NavbarProps> = ({ lang, setLang, t, onOpenBooking }) => {
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           
           {/* Logo Image */}
-          <div className="relative flex items-center justify-center flex-shrink-0" style={{ width: '60px', height: '60px' }}>
+          <div className="relative flex items-center justify-center shrink-0" style={{ width: '60px', height: '60px' }}>
              <img 
                 src={kLogo} 
                 alt="K-House Logo" 
@@ -1096,7 +1096,7 @@ const ReservationModal: React.FC<ReservationModalProps> = ({ t, isOpen, onClose 
 };
 
 const Hero: React.FC<SectionProps> = ({ t }) => (
-  <header id="home" className="relative h-[700px] flex items-center justify-center overflow-hidden">
+  <header id="home" className="relative h-175 flex items-center justify-center overflow-hidden">
     <div className="absolute inset-0 z-0">
       <img 
         src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
@@ -1105,7 +1105,7 @@ const Hero: React.FC<SectionProps> = ({ t }) => (
       />
       {/* Dark overlay for classic luxury feel */}
       <div className="absolute inset-0 bg-black/40"></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30"></div>
+      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/30"></div>
     </div>
 
     <div className="container mx-auto px-4 relative z-10 text-center">
@@ -1143,7 +1143,7 @@ const About: React.FC<SectionProps> = ({ t }) => (
           <img 
             src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
             alt="Interior" 
-            className="relative z-10 shadow-2xl object-cover h-[500px] w-full grayscale-[10%] hover:grayscale-0 transition-all duration-700 rounded-2xl"
+            className="relative z-10 shadow-2xl object-cover h-125 w-full grayscale-10 hover:grayscale-0 transition-all duration-700 rounded-2xl"
           />
           
           <div className="absolute -bottom-10 -left-10 bg-white p-8 shadow-xl z-20 hidden md:block max-w-xs border border-stone-100 rounded-2xl">
@@ -1218,7 +1218,7 @@ const ImageGalleryModal: React.FC<GalleryProps> = ({ isOpen, onClose, images }) 
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center animate-in fade-in duration-300" onClick={onClose}>
+    <div className="fixed inset-0 z-60 bg-black/95 flex items-center justify-center animate-in fade-in duration-300" onClick={onClose}>
       <button 
         onClick={onClose}
         className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors p-2"
@@ -1346,7 +1346,7 @@ const Rooms: React.FC<SectionProps> = ({ t }) => {
                 </div>
                 <img src={room.images[0]} alt={textData.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
               </div>
-              <div className="p-8 flex flex-col flex-grow text-center">
+              <div className="p-8 flex flex-col grow text-center">
                 <h3 className="text-lg font-bold text-stone-900 mb-2 uppercase tracking-wide group-hover:text-amber-700 transition-colors">{textData.title}</h3>
                 <div className="flex justify-center gap-2 mb-6">
                    <div className="h-px w-8 bg-amber-700"></div>
@@ -1545,7 +1545,7 @@ const Contact: React.FC<SectionProps> = ({ t }) => (
           </div>
         </div>
 
-        <div className="h-[600px] bg-stone-800 relative group overflow-hidden rounded-3xl shadow-xl border border-stone-200">
+        <div className="h-150 bg-stone-800 relative group overflow-hidden rounded-3xl shadow-xl border border-stone-200">
           <iframe
             src="https://maps.google.com/maps?q=K-House%2071%20Sukhumvit%2071&t=&z=15&ie=UTF8&iwloc=&output=embed"
             width="100%"
