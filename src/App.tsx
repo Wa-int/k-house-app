@@ -6,8 +6,7 @@ import {
 } from 'lucide-react';
 
 // Import Logo from local assets
-// import kLogo from './assets/k-logo.png';
-const kLogo = "https://placehold.co/100x100/059669/ffffff?text=K+Logo";
+import kLogo from './assets/k-logo.png';
 
 // --- Types & Interfaces ---
 type LanguageCode = 'th' | 'en' | 'jp' | 'cn' | 'ar';
